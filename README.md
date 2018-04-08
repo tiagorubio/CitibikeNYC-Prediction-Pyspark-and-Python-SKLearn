@@ -50,3 +50,5 @@ credentials = {
 Get the values from this dictionary and manually overwrite the one that already exist, keep the existing variable and key names.
 
 Optionally change the stationId and testRunInd variables to reduce the dataset.
+
+## Run the code. The output files will be saved in the same bucket of the source file.
