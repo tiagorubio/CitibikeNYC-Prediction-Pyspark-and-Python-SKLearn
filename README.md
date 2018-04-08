@@ -35,9 +35,6 @@ Upload the files "calendar.csv" and "WeatherData_1261418.csv". The calendar file
 
 When you open the notebook, go to the "Data" panel and select the file "2016-2017_citibike-tripdata.csv.bz2" and click the "insert to code" option and next select "Insert Credentials". It will create a dictionary like the one below:
 
-# @hidden_cell
-# The following code contains the credentials for a file in your IBM Cloud Object Storage.
-# You might want to remove those credentials before you share your notebook.
 credentials = {
     'IBM_API_KEY_ID': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
     'IAM_SERVICE_ID': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
