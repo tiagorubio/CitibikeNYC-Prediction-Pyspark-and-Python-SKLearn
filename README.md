@@ -8,8 +8,7 @@ go to https://www.ibm.com/cloud/watson-studio and sign-up for a free trial.
 Create a project and set up a spark instance and an cloud object storage instance.
 See this video for a tutorial on how to create a project: https://www.youtube.com/watch?v=8-MlqMxFNuc.
 
-Create a notebook and select the runtime environment as the spark instance you created. The defaul name is "spark-da".
-Set the Language to Python 3.5. And the Spark version to 2.1.
+Create a notebook and select, "Import from File" then upload the DataProcessing_Spark.ipynb, then select runtime environment as the spark instance you created. Set the Language to Python 3.5. And the Spark version to 2.1. Create the notebook.
 
 See this video for a tuturial on how to create a notebook in Watson Studio, make sure you select the options above and not the ones from the video. https://www.youtube.com/watch?v=iNw4tQAJoO4
 
@@ -33,7 +32,7 @@ Upload the file to your Watson project as a Data Asset.
 
 Upload the files "calendar.csv" and "WeatherData_1261418.csv". The calendar file is a simple formula in excel. For the weather file references please refer to the full report and also to http://w2.weather.gov/climate/index.php?wfo=okx .
 
-When you open the notebook, go to the "Data" panel and select the file "2016-2017_citibike-tripdata.csv.bz2" and click the "insert to code" option and next select "Insert Credentials". It will create a dictionary like the one below:
+When you edit the notebook, go to the "Data" panel and select the file "2016-2017_citibike-tripdata.csv.bz2" and click the "insert to code" option and next select "Insert Credentials". It will create a dictionary like the one below:
 
 credentials = {
     'IBM_API_KEY_ID': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
