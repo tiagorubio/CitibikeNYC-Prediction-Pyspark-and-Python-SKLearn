@@ -1,6 +1,6 @@
 # Citibike, demand prediction
 
-#Start with DataProcessing_Spark.ipynb.
+## Start with DataProcessing_Spark.ipynb.
 
 This code was ment to be executed within a "IBM Watson Studio" notebook.
 go to https://www.ibm.com/cloud/watson-studio and sign-up for a free trial.
