@@ -9,7 +9,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn import linear_model
-
+import matplotlib.pyplot as plt
 #PrintFunction
 def printing(name,y_test,predicted_test,targetComlumn):
     print("{} {}:".format(name,targetComlumn))
@@ -51,20 +51,23 @@ def regressorFunc(X_train,y_train,estimator = 25,option=1,random = 123):
     if option ==1:
         regressor = RandomForestRegressor(min_samples_split=2, n_estimators=estimator, min_samples_leaf=2,random_state = random)
         regressor.fit(X_train, y_train)
+        return regressor
     if option ==2:
         regressor = DecisionTreeRegressor(random_state= random)
         regressor.fit(X_train, y_train)
+        return regressor
     if option ==3:
         regressor = AdaBoostRegressor(DecisionTreeRegressor(), n_estimators=estimator,random_state= random)
         regressor.fit(X_train, y_train)
+        return regressor
     if option ==4:
         regressor = GradientBoostingRegressor(random_state= random)
-        regressor.fit(X_train, y_train)        
+        regressor.fit(X_train, y_train)
+        return regressor
     if option ==5:
         regressor = linear_model.LinearRegression()
         regressor.fit(X_train, y_train)
-    return regressor
-
+        return regressor
 def regressionComparisson(targets,features,estimator = 25, targetComlumnLabel = "",numberOfPredictions = 1):
     # Splitting the dataset into the Training set and Test set
     X_train, X_test, y_train, y_test = train_test_split(features, targets, train_size=0.8,test_size=0.2, random_state=42)
@@ -104,16 +107,24 @@ def main():
     Station = 359 # 517
     dataset = pd.read_csv('TrainingData_2016-2017.csv')
     dataset = dataset[dataset['StationID']== Station]
+#    dataset = dataset[dataset['Month']<= 2]
     features = processDataSet(dataset)
     InBike = dataset['InBike']
     OutBike = dataset['OutBike']  
     #Compare regressions
-    regressionComparisson(InBike,features, estimator = 1000,targetComlumnLabel = '- InBike',  numberOfPredictions = 1)
-    regressionComparisson(OutBike,features,estimator = 1000,targetComlumnLabel = '- OutBike',numberOfPredictions = 1)
+    regressionComparisson(InBike,features, estimator = 1000,targetComlumnLabel = '- InBike',  numberOfPredictions = 6)
+    regressionComparisson(OutBike,features,estimator = 1000,targetComlumnLabel = '- OutBike',numberOfPredictions = 6)
     
 
 #ForeCasting 2018 based on 2016-2017 data
-
+    #reloading the database
+#    dataset = pd.read_csv('TrainingData_2016-2017.csv')
+#    dataset = dataset[dataset['StationID']== Station]
+#    #doing the regressing again only for jan and feb (forecast period)
+#    dataset = dataset[dataset['Month']<= 2]
+#    features = processDataSet(dataset)
+#    InBike = dataset['InBike']
+#    OutBike = dataset['OutBike']  
     foreCasterInBike = regressorFunc(features,InBike,estimator = 1000,option=1)
     foreCasterOutBike = regressorFunc(features,OutBike,estimator = 1000,option=1)    
     datasetForeCast = pd.read_csv('TestData_2018Q1.csv')
@@ -139,6 +150,8 @@ def main():
     
     printing('Forecast 2018 Based on 2016-2017 data',InBikeForeCast,y_forecastedInBike,'- InBike')
     printing('Forecast 2018 Based on 2016-2017 data',OutBikeForeCast,y_forecastedOutBike,'- OutBike')
+
+#Saving the resultes
     featuresForeCast['InBike'] = datasetForeCast['InBike']
     featuresForeCast["forecastedValueInBike"] = y_forecastedInBike
     featuresForeCast['OutBike'] = datasetForeCast['OutBike']
@@ -147,7 +160,24 @@ def main():
     featuresForeCast['Day'] = datasetForeCast['Day']
     featuresForeCast['Month'] = datasetForeCast['Month'] 
     featuresForeCast['DateHour'] = datasetForeCast['DateHour']
-    featuresForeCast.to_csv("ForeCast2018.csv")
+    try:
+        featuresForeCast.to_csv("ForeCast2018.csv")
+    except:
+        pass
+#pltoting
+    plt.scatter(InBikeForeCast, y_forecastedInBike, color = 'red')
+    plt.plot(y_forecastedInBike, y_forecastedInBike, color = 'blue')
+    plt.title('RandomForest Regression - InBike Jan-Fev 2018')
+    plt.xlabel('True Value')
+    plt.ylabel('Prediction')
+    plt.show()  
+    
+    plt.scatter(OutBikeForeCast, y_forecastedOutBike, color = 'red')
+    plt.plot(y_forecastedOutBike, y_forecastedOutBike, color = 'blue')
+    plt.title('RandomForest Regression - OutBike Jan-Fev 2018')
+    plt.xlabel('True Value')
+    plt.ylabel('Prediction')
+    plt.show()  
     
 if __name__ == "__main__":
     # calling main function
